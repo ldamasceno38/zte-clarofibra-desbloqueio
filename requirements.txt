@@ -1,1 +1,5 @@
-pycryptodome
+streamlit>=1.28.0
+pycryptodome>=3.19.0
+pycryptodomex>=3.19.0
+lxml>=4.9.0
+xml2dict>=0.2.2
