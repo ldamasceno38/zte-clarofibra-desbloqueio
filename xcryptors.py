@@ -1,7 +1,7 @@
 import struct
 from io import BytesIO
 from hashlib import sha256
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 from Crypto.Cipher import AES
 
 from constants import PAYLOAD_MAGIC
