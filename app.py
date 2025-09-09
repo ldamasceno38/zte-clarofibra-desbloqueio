@@ -1,5 +1,4 @@
 import streamlit as st
-import Crypto
 import tempfile
 import os
 import subprocess
@@ -7,40 +6,7 @@ import sys
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
-# DEBUG - Adicione temporariamente no início do app.py
 
-st.write("🔍 **Debug - Verificando dependências disponíveis:**")
-
-# Testar importações crypto
-try:
-    from Crypto.Cipher import AES
-    st.success("✅ Crypto.Cipher.AES importado com sucesso")
-except ImportError as e:
-    st.error(f"❌ Erro ao importar Crypto.Cipher.AES: {e}")
-
-try:
-    from Cryptodome.Cipher import AES
-    st.success("✅ Cryptodome.Cipher.AES importado com sucesso")
-except ImportError as e:
-    st.error(f"❌ Erro ao importar Cryptodome.Cipher.AES: {e}")
-
-# Verificar se pycryptodome está instalado
-import sys
-import subprocess
-
-result = subprocess.run([sys.executable, '-m', 'pip', 'list'], 
-                       capture_output=True, text=True)
-st.text("📦 **Pacotes instalados relacionados a crypto:**")
-for line in result.stdout.split('\n'):
-    if any(keyword in line.lower() for keyword in ['crypto', 'pycrypto']):
-        st.text(line)
-
-# Verificar estrutura de diretórios
-import os
-st.text("📁 **Arquivos no diretório atual:**")
-files = os.listdir('.')
-for f in files:
-    st.text(f"  {f}")
 # Configuration - UPDATE THESE PATHS
 ZTE_UTILITY_PATH = os.path.dirname(os.path.abspath(__file__))  # Path to your cloned repo
 EXAMPLES_PATH = ZTE_UTILITY_PATH
@@ -414,7 +380,7 @@ def editar_header_arquivo(caminho_arquivo):
 
 def main():
     st.set_page_config(
-        page_title="Desbloqueio ZTE Claro Fibra",
+        page_title="ZTE Tools Suite - Desbloqueio Claro",
         page_icon="🔓",
         layout="wide"
     )
@@ -423,11 +389,16 @@ def main():
     add_custom_css()
     
     # Main header with glow effect
-    st.markdown('<h1>Desbloqueio ZTE Claro Fibra</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="tagline">Habilita funções ADMIN no Usuário da Etiqueta</p>', unsafe_allow_html=True)
-    st.markdown('<strong>Feito por:</strong> <a href="https://github.com/ldamasceno38" target="_blank">https://github.com/ldamasceno38</a>', unsafe_allow_html=True)
-    st.markdown('Fork de:</strong> <a href="https://github.com/mkst/zte-config-utility" target="_blank">https://github.com/mkst/zte-config-utility</a>', unsafe_allow_html=True)
-
+    st.markdown('<h1>ZTE TOOLS SUITE</h1>', unsafe_allow_html=True)
+    st.markdown('<p class="tagline">Professional Tools for ZTE F6600P & F6645P - Desbloqueio Claro</p>', unsafe_allow_html=True)
+    
+    # Description box matching the HTML design
+    st.markdown("""
+    <div class="description">
+        <strong>ZTE Tools Suite</strong> - Complete toolkit for ZTE modem management including configuration unlock and header fix utility.<br/>
+        <strong>GitHub:</strong> <a href="https://github.com/ldamasceno38" target="_blank">https://github.com/ldamasceno38</a>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Setup Python path for subprocesses
     setup_python_path()
@@ -437,6 +408,7 @@ def main():
         return
     
     # Main interface
+    st.markdown('<h2 class="section-title">🔓 Desbloqueio de Interface</h2>', unsafe_allow_html=True)
     process_interface()
 
 def check_paths():
@@ -460,14 +432,29 @@ ZTE_UTILITY_PATH = "/caminho/para/seu/zte-config-utility"
 
 def run_script_with_env(cmd, cwd=None):
     """Run a script with proper environment setup"""
+    import sys
+    
     env = os.environ.copy()
     zte_path = os.path.abspath(ZTE_UTILITY_PATH)
-    current_pythonpath = env.get('PYTHONPATH', '')
     
-    if current_pythonpath:
-        env['PYTHONPATH'] = f"{zte_path}:{current_pythonpath}"
-    else:
-        env['PYTHONPATH'] = zte_path
+    # Get current Python paths from the running environment
+    current_paths = sys.path.copy()
+    
+    # Add ZTE path
+    if zte_path not in current_paths:
+        current_paths.append(zte_path)
+    
+    # Set PYTHONPATH to include all current paths
+    env['PYTHONPATH'] = os.pathsep.join(current_paths)
+    
+    # Also ensure we use the same Python executable
+    if cmd[0] == 'python3':
+        cmd[0] = sys.executable
+    elif cmd[0] == 'python':
+        cmd[0] = sys.executable
+    
+    st.write(f"🐍 Using Python: {sys.executable}")
+    st.write(f"📁 PYTHONPATH: {env.get('PYTHONPATH', 'Not Set')[:100]}...")
     
     return subprocess.run(cmd, capture_output=True, text=True, cwd=cwd, env=env)
 
@@ -515,13 +502,13 @@ def process_interface():
     
     with col1:
         mac = st.text_input(
-            "🌐 Endereço MAC (Etiqueta ONT MAC)",
+            "🌐 Endereço MAC",
             placeholder="AA:BB:CC:DD:EE:FF",
             help="Endereço MAC do roteador"
         )
         serial = st.text_input(
-            "🔢 Número de Série (Etiqueta PON-SN)",
-            placeholder="ZTEGXXXXXXXX",
+            "🔢 Número de Série",
+            placeholder="ZTEXXXXXXXXXXXX",
             help="Número de série do roteador"
         )
     
