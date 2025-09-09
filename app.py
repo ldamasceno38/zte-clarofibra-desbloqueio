@@ -391,7 +391,7 @@ def main():
     # Main header with glow effect
     st.markdown('<h1>🔓 ZTE CLARO FTTH 🔓</h1>', unsafe_allow_html=True)
     st.markdown('<p class="tagline">Habilita permissões ADMIN para o usuário da Etiqueta</p>', unsafe_allow_html=True)
-    
+    st.markdown('<p class="tagline">by github.com/ldamasceno38 using binaries from mkst/zte-config-utility</p>', unsafe_allow_html=True)
 
     
     # Setup Python path for subprocesses
@@ -479,7 +479,7 @@ def modify_xml_auth_level(xml_content):
             for row in table.findall("Row[@No='1']"):
                 for dm in row.findall("DM[@name='Level']"):
                     old_value = dm.get('val', 'N/A')
-                    dm.set('val', '2')
+                    dm.set('val', '1')
                     st.success("✅ **Interface Desbloqueada com Sucesso!**")
                     modified = True
                     break
