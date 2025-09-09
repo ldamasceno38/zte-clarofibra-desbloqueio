@@ -391,8 +391,8 @@ def main():
     # Main header with glow effect
     st.markdown('<h1>Desbloqueio ZTE Claro Fibra</h1>', unsafe_allow_html=True)
     st.markdown('<p class="tagline">Habilita funções ADMIN no Usuário da Etiqueta</p>', unsafe_allow_html=True)
-    st.markdown('<strong>GitHub:</strong> <a href="https://github.com/ldamasceno38" target="_blank">https://github.com/ldamasceno38</a>', unsafe_allow_html=True)
-    st.markdown('Libraries :</strong> <a href="https://github.com/mkst/zte-config-utility" target="_blank">https://github.com/mkst/zte-config-utility</a>', unsafe_allow_html=True)
+    st.markdown('<strong>Feito por:</strong> <a href="https://github.com/ldamasceno38" target="_blank">https://github.com/ldamasceno38</a>', unsafe_allow_html=True)
+    st.markdown('Fork de:</strong> <a href="https://github.com/mkst/zte-config-utility" target="_blank">https://github.com/mkst/zte-config-utility</a>', unsafe_allow_html=True)
 
     
     # Setup Python path for subprocesses
