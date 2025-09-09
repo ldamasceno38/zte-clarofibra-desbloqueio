@@ -1,3 +1,4 @@
+import streamlit as st
 import struct
 from io import BytesIO
 from hashlib import sha256
