@@ -1,8 +1,7 @@
 import struct
+import Crypto
 from io import BytesIO
 from hashlib import sha256
-
-
 from constants import PAYLOAD_MAGIC
 
 
