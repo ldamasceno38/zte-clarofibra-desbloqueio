@@ -1,0 +1,193 @@
+"""Known encryption keys for ZTE router config.bin files"""
+
+# 1st element is the key, everything else is the start of the signature
+KNOWN_KEYS = {
+    "MIK@0STzKpB%qJZe": ["zxhn h118n e"],
+    "MIK@0STzKpB%qJZf": ["zxhn h118n v"],
+    "402c38de39bed665": ["zxhn h267a"],
+    "Q#Zxn*x3kVLc": ["zxhn h168n v2"],
+    # due to bug, orig. is "Wj%2$CjM"
+    "Wj": ["zxhn h298n"],
+    "m8@96&ZG3Nm7N&Iz": ["zxhn h298a"],
+    "GrWM2Hz&LTvz&f^5": ["zxhn h108n"],
+    "GrWM3Hz&LTvz&f^9": ["zxhn h168n v3", "zxhn h168n h"],
+    "Renjx%2$CjM": ["zxhn h208n", "zxv10 h201l"],
+    "tHG@Ti&GVh@ql3XN": ["zxhn h267n"],
+    # not sure, might be related to H108N
+    "SDEwOE5WMi41Uk9T": ["TODO"],
+}
+
+# deprecated
+KNOWN_MODELS = ["H268Q", "H298Q", "H188A", "H288A", "H267AV1_CZ"]
+
+KNOWN_SIGNATURES = [
+    "H188A",
+    "H196Q",
+    "H268Q",
+    "H288A",
+    "H298Q",
+    # "ZXHN H168N V3.5",
+    # "ZXHN H298Q",
+    # "ZXHN H268Q",
+]
+
+
+def find_key(signature):
+    signature = signature.lower()
+    for key, sigs in KNOWN_KEYS.items():
+        for sig in sigs:
+            if signature.startswith(sig):
+                return key
+    return None
+
+
+def get_all_keys():
+    return list(KNOWN_KEYS.keys())
+
+
+def get_all_models():
+    return KNOWN_MODELS
+
+
+def mac_to_str(mac, reverse=False, separator=":"):
+    if len(mac) == 0:
+        return ""
+
+    if not isinstance(mac, bytes):
+        mac = mac.strip().replace(":", "").replace("-", "")
+        if len(mac) != 12:
+            raise ValueError("MAC address string has wrong length")
+        mac = bytes.fromhex(mac)
+
+    if len(mac) != 6:
+        raise ValueError("MAC address has wrong length")
+
+    if reverse:
+        mac = reversed(mac)
+
+    return separator.join(f"{x:02x}" for x in mac)
+
+
+def tagparams_keygen(params, key_prefix="Mcd5c46e", iv_prefix="G21b667b"):
+    if hasattr(params, "key_prefix"):
+        key_prefix = params.key_prefix
+    if hasattr(params, "iv_prefix"):
+        iv_prefix = params.iv_prefix
+
+    try:
+        macStr = mac_to_str(params.mac)
+        key = params.longPass + params.serial + key_prefix
+        iv = iv_prefix + macStr + params.longPass
+        return (
+            key,
+            iv,
+            "tagparams: mac='%s', serial='%s', longPass='%s'"
+            % (macStr, params.serial, params.longPass),
+        )
+    except AttributeError:
+        return ()
+
+
+def serial_keygen(params, key_prefix="8cc72b05705d5c46", iv_prefix="667b02a85c61c786"):
+    if hasattr(params, "key_prefix"):
+        key_prefix = params.key_prefix
+    if hasattr(params, "iv_prefix"):
+        iv_prefix = params.iv_prefix
+
+    try:
+        key = key_prefix + params.serial
+        iv = iv_prefix + params.serial
+        return (key, iv, "serial: '%s'" % params.serial)
+    except AttributeError:
+        return ()
+
+
+def signature_keygen(params, key_suffix="Key02721401", iv_suffix="Iv02721401"):
+    if hasattr(params, "key_suffix"):
+        key_suffix = params.key_suffix
+    if hasattr(params, "iv_suffix"):
+        iv_suffix = params.iv_suffix
+
+    try:
+        nospaces = params.signature.replace(" ", "")
+        key = nospaces + key_suffix
+        iv = nospaces + iv_suffix
+        return (key, iv, "signature: '%s'" % params.signature)
+    except AttributeError:
+        return ()
+
+
+# 1st element is the function generating the key, 2nd is array of possible matching signature starts
+KNOWN_KEYGENS = {
+    (lambda p: tagparams_keygen(p)): ["H288A"],
+    (lambda p: serial_keygen(p)): ["ZXHN H298A", "ZXHN H267A V1.0", "H298A"],
+    (lambda p: signature_keygen(p)): ["ZXHN H168N V3.5"],
+    (lambda p: signature_keygen(p, key_suffix="Key02710010", iv_suffix="Iv02710010")): [
+        "ZXHN H298Q",
+        "ZXHN H268Q",
+    ],
+    (lambda p: signature_keygen(p, key_suffix="Key02710001", iv_suffix="Iv02710001")): [
+        "H188A",
+        "H288A",
+    ],
+    (lambda p: signature_keygen(p, key_suffix="Key02660004", iv_suffix="Iv02660004")): [
+        "H196Q"
+    ],
+    (
+        lambda p: signature_keygen(
+            p,
+            key_suffix="8cc72b05705d5c46f412af8cbed55aa",
+            iv_suffix="667b02a85c61c786def4521b060265e",
+        )
+    ): ["ZXHN F450(EPON ONU)"],
+    (
+        lambda p: (
+            "8cc72b05705d5c46f412af8cbed55aad",
+            "667b02a85c61c786def4521b060265e8",
+            "hardcoded key",
+        )
+    ): ["ZXHN H267A V1.0"],
+}
+
+
+def run_keygens(params):
+    outArr = []
+    for gen, sigs in KNOWN_KEYGENS.items():
+        matching = False
+        for sig in sigs:
+            if params.signature.lower().startswith(sig.lower()):
+                matching = True
+                break
+        if matching:
+            genResult = gen(params)
+            if len(genResult):
+                outArr.append(genResult)
+    return outArr
+
+
+def run_all_keygens(params):
+    outArr = []
+    for gen in KNOWN_KEYGENS.keys():
+        genResult = gen(params)
+        if len(genResult):
+            outArr.append(genResult)
+
+    return outArr
+
+
+def run_any_keygen(params, wanted):
+    keygened = run_keygens(params)
+    if keygened != []:
+        return keygened[0]
+
+    # no match for signature found in keygens, find a generic keygen of wanted type and use that
+    allgens = run_all_keygens(params)
+    for gen in allgens:
+        if gen[2].startswith(wanted):
+            return gen
+
+    # should never get here as long as wanted is an existing type
+    return None
+
+
+TYPE_3_KNOWN_KEY_IVS = [("H267AV1_CZkey", "H267AV1_CZIV", "H267A Czech")]
