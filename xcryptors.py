@@ -2,7 +2,7 @@ import struct
 from io import BytesIO
 from hashlib import sha256
 from constants import PAYLOAD_MAGIC
-from . import Crypto
+from app import Crypto
 
 class Xcryptor:
     """Standard Type 2 encryption"""
