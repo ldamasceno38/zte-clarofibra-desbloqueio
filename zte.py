@@ -1,10 +1,7 @@
-"""Various helper functions to read/write zte configuration"""
-
+import struct
+import constants
 from io import BytesIO
 from os import stat
-import struct
-
-import constants
 
 
 def read_header(infile, little_endian=False):
