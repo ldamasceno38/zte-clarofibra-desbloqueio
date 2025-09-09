@@ -514,12 +514,12 @@ def process_interface():
     
     with col1:
         mac = st.text_input(
-            "🌐 Endereço MAC",
+            "🌐 Endereço MAC - Etiqueta ONT-MAC",
             placeholder="AA:BB:CC:DD:EE:FF",
             help="Endereço MAC do roteador"
         )
         serial = st.text_input(
-            "🔢 Número de Série",
+            "🔢 Número de Série - Etiqueta PON-SN",
             placeholder="ZTEXXXXXXXXXXXX",
             help="Número de série do roteador"
         )
