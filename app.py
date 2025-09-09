@@ -389,7 +389,7 @@ def main():
     add_custom_css()
     
     # Main header with glow effect
-    st.markdown('<h1>🔓 DESBLOQUEIO ZTE CLARO FIBRA 🔓</h1>', unsafe_allow_html=True)
+    st.markdown('<h1>🔓 ZTE CLARO FTTH 🔓</h1>', unsafe_allow_html=True)
     st.markdown('<p class="tagline">Habilita permissões ADMIN para o usuário da Etiqueta</p>', unsafe_allow_html=True)
     
 
