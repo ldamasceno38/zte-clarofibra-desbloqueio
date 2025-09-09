@@ -2,7 +2,7 @@ import struct
 from io import BytesIO
 from hashlib import sha256
 
-from Cryptodome.Cipher import AES
+from Crypto.Cipher import AES
 
 from constants import PAYLOAD_MAGIC
 
