@@ -389,16 +389,10 @@ def main():
     add_custom_css()
     
     # Main header with glow effect
-    st.markdown('<h1>ZTE TOOLS SUITE</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="tagline">Professional Tools for ZTE F6600P & F6645P - Desbloqueio Claro</p>', unsafe_allow_html=True)
+    st.markdown('<h1>🔓 DESBLOQUEIO ZTE CLARO FIBRA 🔓</h1>', unsafe_allow_html=True)
+    st.markdown('<p class="tagline">Habilita permissões ADMIN para o usuário da Etiqueta</p>', unsafe_allow_html=True)
     
-    # Description box matching the HTML design
-    st.markdown("""
-    <div class="description">
-        <strong>ZTE Tools Suite</strong> - Complete toolkit for ZTE modem management including configuration unlock and header fix utility.<br/>
-        <strong>GitHub:</strong> <a href="https://github.com/ldamasceno38" target="_blank">https://github.com/ldamasceno38</a>
-    </div>
-    """, unsafe_allow_html=True)
+
     
     # Setup Python path for subprocesses
     setup_python_path()
@@ -408,7 +402,6 @@ def main():
         return
     
     # Main interface
-    st.markdown('<h2 class="section-title">🔓 Desbloqueio de Interface</h2>', unsafe_allow_html=True)
     process_interface()
 
 def check_paths():
@@ -431,7 +424,7 @@ ZTE_UTILITY_PATH = "/caminho/para/seu/zte-config-utility"
     return True
 
 def run_script_with_env(cmd, cwd=None):
-    """Run a script with proper environment setup"""
+    """Run a script with proper environment setup and filter output"""
     import sys
     
     env = os.environ.copy()
@@ -453,10 +446,29 @@ def run_script_with_env(cmd, cwd=None):
     elif cmd[0] == 'python':
         cmd[0] = sys.executable
     
-    st.write(f"🐍 Using Python: {sys.executable}")
-    st.write(f"📁 PYTHONPATH: {env.get('PYTHONPATH', 'Not Set')[:100]}...")
+    # Run with suppressed stdout to avoid debug output
+    result = subprocess.run(cmd, capture_output=True, text=True, cwd=cwd, env=env)
     
-    return subprocess.run(cmd, capture_output=True, text=True, cwd=cwd, env=env)
+    # Filter out unwanted debug lines from stdout
+    if result.stdout:
+        filtered_lines = []
+        for line in result.stdout.split('\n'):
+            # Skip lines that contain debug info we don't want to show
+            if any(skip_text in line for skip_text in [
+                'Using Python:',
+                'PYTHONPATH:',
+                'python3',
+                '/home/adminuser',
+                '/usr/local/lib'
+            ]):
+                continue
+            if line.strip():  # Only keep non-empty lines
+                filtered_lines.append(line)
+        
+        # Reconstruct stdout without debug lines
+        result.stdout = '\n'.join(filtered_lines)
+    
+    return result
 
 def modify_xml_auth_level(xml_content):
     """Modify XML to set DevAuthInfo Level to 1 on Row 2"""
