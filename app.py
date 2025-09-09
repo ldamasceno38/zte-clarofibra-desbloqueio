@@ -1,5 +1,5 @@
 import streamlit as st
-import Cryptodome
+import Crypto
 import tempfile
 import os
 import subprocess
