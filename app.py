@@ -479,7 +479,7 @@ def modify_xml_auth_level(xml_content):
             for row in table.findall("Row[@No='1']"):
                 for dm in row.findall("DM[@name='Level']"):
                     old_value = dm.get('val', 'N/A')
-                    dm.set('val', '1')
+                    dm.set('val', '2')
                     st.success("✅ **Interface Desbloqueada com Sucesso!**")
                     modified = True
                     break
