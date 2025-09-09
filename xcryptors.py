@@ -1,6 +1,7 @@
 import struct
 from io import BytesIO
 from hashlib import sha256
+import Crypto
 
 from Crypto.Cipher import AES
 
