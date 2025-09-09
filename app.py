@@ -7,7 +7,40 @@ import sys
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
+# DEBUG - Adicione temporariamente no início do app.py
 
+st.write("🔍 **Debug - Verificando dependências disponíveis:**")
+
+# Testar importações crypto
+try:
+    from Crypto.Cipher import AES
+    st.success("✅ Crypto.Cipher.AES importado com sucesso")
+except ImportError as e:
+    st.error(f"❌ Erro ao importar Crypto.Cipher.AES: {e}")
+
+try:
+    from Cryptodome.Cipher import AES
+    st.success("✅ Cryptodome.Cipher.AES importado com sucesso")
+except ImportError as e:
+    st.error(f"❌ Erro ao importar Cryptodome.Cipher.AES: {e}")
+
+# Verificar se pycryptodome está instalado
+import sys
+import subprocess
+
+result = subprocess.run([sys.executable, '-m', 'pip', 'list'], 
+                       capture_output=True, text=True)
+st.text("📦 **Pacotes instalados relacionados a crypto:**")
+for line in result.stdout.split('\n'):
+    if any(keyword in line.lower() for keyword in ['crypto', 'pycrypto']):
+        st.text(line)
+
+# Verificar estrutura de diretórios
+import os
+st.text("📁 **Arquivos no diretório atual:**")
+files = os.listdir('.')
+for f in files:
+    st.text(f"  {f}")
 # Configuration - UPDATE THESE PATHS
 ZTE_UTILITY_PATH = os.path.dirname(os.path.abspath(__file__))  # Path to your cloned repo
 EXAMPLES_PATH = ZTE_UTILITY_PATH
