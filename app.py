@@ -15,8 +15,8 @@ EXAMPLES_PATH = ZTE_UTILITY_PATH
 def add_custom_css():
     st.markdown("""
     <style>
-    /* Import Courier New font and reset */
-    @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+    /* Import Fira Code font for a modern dev look */
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
     
     * {
         margin: 0;
@@ -24,20 +24,20 @@ def add_custom_css():
         box-sizing: border-box;
     }
     
-    /* Main background and body styling */
+    /* Main App and Background Styling */
     .stApp {
-        background: #0a0a0a !important;
-        color: #f5f5f5 !important;
-        font-family: 'Courier New', 'Courier Prime', monospace !important;
-        line-height: 1.6;
+        background: #0d0d0d !important;
+        color: #e0e0e0 !important;
+        font-family: 'Fira Code', monospace !important;
+        line-height: 1.8; /* Increased line height for better readability */
     }
     
     .main {
-        background: #0a0a0a !important;
-        color: #f5f5f5 !important;
+        background: #0d0d0d !important;
+        color: #e0e0e0 !important;
     }
     
-    /* Animated stars background */
+    /* Animated Stars Background */
     .stApp::before {
         content: '';
         position: fixed;
@@ -47,11 +47,11 @@ def add_custom_css():
         height: 100%;
         z-index: -1;
         background-image: 
-            radial-gradient(2px 2px at 20px 30px, #bbb, transparent),
-            radial-gradient(2px 2px at 40px 70px, #fff, transparent),
-            radial-gradient(1px 1px at 90px 40px, #bbb, transparent),
-            radial-gradient(1px 1px at 130px 80px, #fff, transparent),
-            radial-gradient(2px 2px at 160px 30px, #bbb, transparent);
+            radial-gradient(2px 2px at 20px 30px, #4a4a4a, transparent),
+            radial-gradient(2px 2px at 40px 70px, #e0e0e0, transparent),
+            radial-gradient(1px 1px at 90px 40px, #4a4a4a, transparent),
+            radial-gradient(1px 1px at 130px 80px, #e0e0e0, transparent),
+            radial-gradient(2px 2px at 160px 30px, #4a4a4a, transparent);
         background-repeat: repeat;
         background-size: 200px 100px;
         animation: stars 20s linear infinite;
@@ -62,16 +62,16 @@ def add_custom_css():
         100% { transform: translateY(-100px); }
     }
     
-    /* Header styling with glow effect */
+    /* Header Styling with Glow Effect */
     h1 {
-        font-size: 2.5rem !important;
+        font-size: 2.8rem !important; /* Slightly larger for emphasis */
         font-weight: 700 !important;
         color: #fff !important;
         text-align: center !important;
         text-shadow: 0 0 20px #fff !important;
         animation: glow 2s ease-in-out infinite alternate !important;
         margin-bottom: 0.5rem !important;
-        font-family: 'Courier New', monospace !important;
+        font-family: 'Fira Code', monospace !important;
     }
     
     @keyframes glow {
@@ -79,31 +79,32 @@ def add_custom_css():
         to { text-shadow: 0 0 30px #aaa, 0 0 40px #fff; }
     }
     
-    /* Tagline styling */
+    /* Tagline Styling */
     .tagline {
         font-size: 1.1rem;
         color: #aaa;
         text-align: center;
         margin-bottom: 2rem;
-        font-family: 'Courier New', monospace;
+        font-family: 'Fira Code', monospace;
     }
     
-    /* Main container styling */
+    /* Main Container Styling (The Card) */
     .block-container {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-        border-radius: 8px !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.5rem !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
         margin: 1rem auto !important;
         backdrop-filter: blur(10px);
-        max-width: 800px !important;
+        max-width: 900px !important;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     }
     
-    /* Description box */
+    /* Description Box */
     .description {
-        background: rgba(255, 255, 255, 0.1) !important;
-        border-left: 4px solid #fff !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-left: 4px solid #f5a623 !important; /* Golden accent line */
         padding: 1.5rem !important;
         margin-bottom: 3rem !important;
         border-radius: 0 8px 8px 0 !important;
@@ -111,14 +112,14 @@ def add_custom_css():
         text-align: center !important;
     }
     
-    /* Input fields */
+    /* Input Fields */
     .stTextInput > div > div > input,
     .stSelectbox > div > div > select {
-        background: rgba(0, 0, 0, 0.5) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-        border-radius: 4px !important;
+        background: rgba(0, 0, 0, 0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 6px !important;
         color: #fff !important;
-        font-family: 'Courier New', monospace !important;
+        font-family: 'Fira Code', monospace !important;
         font-size: 1.1rem !important;
         padding: 0.8rem !important;
         transition: all 0.3s ease !important;
@@ -126,13 +127,13 @@ def add_custom_css():
     
     .stTextInput > div > div > input:focus,
     .stSelectbox > div > div > select:focus {
-        border-color: #fff !important;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3) !important;
+        border-color: #ffd700 !important; /* Golden focus color */
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.3) !important;
         outline: none !important;
     }
     
     .stTextInput > div > div > input::placeholder {
-        color: #666 !important;
+        color: #888 !important;
     }
     
     /* Labels */
@@ -141,32 +142,33 @@ def add_custom_css():
         color: #fff !important;
         font-weight: 700 !important;
         font-size: 1.2rem !important;
-        font-family: 'Courier New', monospace !important;
+        font-family: 'Fira Code', monospace !important;
         margin-bottom: 0.5rem !important;
     }
     
-    /* File uploader */
+    /* File Uploader */
     .stFileUploader > div > div {
         background: rgba(255, 255, 255, 0.05) !important;
-        border: 2px dashed rgba(255, 255, 255, 0.5) !important;
+        border: 2px dashed rgba(255, 255, 255, 0.3) !important;
         border-radius: 8px !important;
-        padding: 1rem !important;
+        padding: 2rem !important;
     }
     
     .stFileUploader > div > div > div {
         color: #fff !important;
-        font-family: 'Courier New', monospace !important;
+        font-family: 'Fira Code', monospace !important;
+        font-weight: 400 !important;
     }
     
-    /* Primary button - golden gradient */
+    /* Primary Button - Golden Gradient */
     .stButton > button[data-testid="baseButton-primary"] {
         width: 100% !important;
         padding: 1rem !important;
-        background: linear-gradient(45deg, #ffd700, #ffed4e) !important;
-        border: 2px solid #ffd700 !important;
+        background: linear-gradient(45deg, #f5a623, #f7d75d) !important;
+        border: 2px solid #f5a623 !important;
         border-radius: 8px !important;
-        color: #000 !important;
-        font-family: 'Courier New', monospace !important;
+        color: #1a1a1a !important;
+        font-family: 'Fira Code', monospace !important;
         font-size: 1.1rem !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
@@ -174,20 +176,20 @@ def add_custom_css():
     }
     
     .stButton > button[data-testid="baseButton-primary"]:hover {
-        background: linear-gradient(45deg, #ffed4e, #fff700) !important;
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5) !important;
+        background: linear-gradient(45deg, #f7d75d, #f9e285) !important;
+        box-shadow: 0 0 20px rgba(245, 166, 35, 0.5) !important;
         transform: translateY(-2px) !important;
     }
     
-    /* Regular buttons - white gradient */
+    /* Regular Buttons - White Gradient */
     .stButton > button:not([data-testid="baseButton-primary"]) {
         width: 100% !important;
         padding: 1rem !important;
-        background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4)) !important;
-        border: 2px solid #fff !important;
+        background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2)) !important;
+        border: 2px solid #ccc !important;
         border-radius: 8px !important;
         color: #fff !important;
-        font-family: 'Courier New', monospace !important;
+        font-family: 'Fira Code', monospace !important;
         font-size: 1.1rem !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
@@ -195,20 +197,20 @@ def add_custom_css():
     }
     
     .stButton > button:not([data-testid="baseButton-primary"]):hover {
-        background: linear-gradient(45deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.6)) !important;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5) !important;
+        background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3)) !important;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4) !important;
         transform: translateY(-2px) !important;
     }
     
-    /* Download button special styling */
+    /* Download Button Special Styling (Same as primary) */
     .stDownloadButton > button {
         width: 100% !important;
         padding: 1rem !important;
-        background: linear-gradient(45deg, #ffd700, #ffed4e) !important;
-        border: 2px solid #ffd700 !important;
+        background: linear-gradient(45deg, #f5a623, #f7d75d) !important;
+        border: 2px solid #f5a623 !important;
         border-radius: 8px !important;
-        color: #000 !important;
-        font-family: 'Courier New', monospace !important;
+        color: #1a1a1a !important;
+        font-family: 'Fira Code', monospace !important;
         font-size: 1.1rem !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
@@ -216,74 +218,70 @@ def add_custom_css():
     }
     
     .stDownloadButton > button:hover {
-        background: linear-gradient(45deg, #ffed4e, #fff700) !important;
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5) !important;
+        background: linear-gradient(45deg, #f7d75d, #f9e285) !important;
+        box-shadow: 0 0 20px rgba(245, 166, 35, 0.5) !important;
         transform: translateY(-2px) !important;
     }
     
-    /* Alert messages */
+    /* Alert Messages */
     .stAlert {
         background: rgba(255, 255, 255, 0.05) !important;
         border-radius: 8px !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        padding: 1rem !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        padding: 1.5rem !important;
         margin: 1rem 0 !important;
-        font-family: 'Courier New', monospace !important;
+        font-family: 'Fira Code', monospace !important;
     }
     
     .stSuccess {
-        background: rgba(255, 255, 255, 0.1) !important;
-        border: 1px solid #888 !important;
-        color: #fff !important;
+        background: rgba(30, 150, 30, 0.2) !important;
+        border-left: 4px solid #4CAF50 !important;
+        color: #b0e0b0 !important;
     }
     
     .stError {
-        background: rgba(255, 255, 255, 0.1) !important;
-        border: 1px solid #666 !important;
-        color: #fff !important;
+        background: rgba(200, 50, 50, 0.2) !important;
+        border-left: 4px solid #f44336 !important;
+        color: #ffb0b0 !important;
     }
     
     .stInfo {
-        background: rgba(255, 255, 255, 0.1) !important;
-        border: 1px solid #888 !important;
-        color: #fff !important;
+        background: rgba(60, 140, 200, 0.2) !important;
+        border-left: 4px solid #2196F3 !important;
+        color: #a0c0ff !important;
     }
     
     .stWarning {
-        background: rgba(255, 255, 255, 0.1) !important;
-        border: 1px solid #888 !important;
-        color: #fff !important;
+        background: rgba(255, 165, 0, 0.2) !important;
+        border-left: 4px solid #ff9800 !important;
+        color: #ffe0b2 !important;
     }
     
-    /* Code blocks */
+    /* Code Blocks */
     .stCode {
-        background: rgba(0, 0, 0, 0.5) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-        border-radius: 4px !important;
-        padding: 1rem !important;
-        color: #32cd32 !important;
-        font-family: 'Courier New', monospace !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 6px !important;
+        padding: 1.5rem !important;
+        color: #32cd32 !important; /* A brighter lime green */
+        font-family: 'Fira Code', monospace !important;
+        font-size: 0.9rem !important;
     }
     
     /* Spinner */
-    .stSpinner {
+    .stSpinner > div {
         color: #fff !important;
     }
     
-    /* Section titles */
+    /* Section Titles */
     .section-title {
         font-size: 1.5rem !important;
         color: #fff !important;
         margin-bottom: 1.5rem !important;
-        border-left: 4px solid #fff !important;
+        border-left: 4px solid #ffd700 !important; /* Golden accent */
         padding-left: 1rem !important;
-        font-family: 'Courier New', monospace !important;
+        font-family: 'Fira Code', monospace !important;
         font-weight: 700 !important;
-    }
-    
-    /* Columns */
-    .row-widget {
-        background: transparent !important;
     }
     
     /* Remove Streamlit branding */
@@ -293,29 +291,18 @@ def add_custom_css():
     
     /* Markdown styling */
     .stMarkdown {
-        color: #f5f5f5 !important;
-        font-family: 'Courier New', monospace !important;
+        color: #e0e0e0 !important;
+        font-family: 'Fira Code', monospace !important;
     }
     
     .stMarkdown a {
-        color: #ffd700 !important;
+        color: #f7d75d !important; /* Lighter golden for links */
         text-decoration: none !important;
     }
     
     .stMarkdown a:hover {
-        color: #fff700 !important;
-    }
-    
-    /* Mobile responsive */
-    @media (max-width: 768px) {
-        h1 {
-            font-size: 1.8rem !important;
-        }
-        
-        .block-container {
-            padding: 1rem !important;
-            margin: 0.5rem !important;
-        }
+        color: #fff !important;
+        text-decoration: underline !important;
     }
     
     /* Fade in animation for content */
@@ -333,12 +320,13 @@ def add_custom_css():
             transform: translateY(0);
         }
     }
+    
     </style>
     """, unsafe_allow_html=True)
 
-# Add the ZTE utility path to Python path for subprocess calls
+# Add the rest of the app.py code below this function
 def setup_python_path():
-    """Ensure the ZTE utility path is in PYTHONPATH for subprocesses"""
+    """Ensure the ZTE utility path is in PYTHONPATH for subprocess calls"""
     current_path = os.environ.get('PYTHONPATH', '')
     zte_path = os.path.abspath(ZTE_UTILITY_PATH)
     
