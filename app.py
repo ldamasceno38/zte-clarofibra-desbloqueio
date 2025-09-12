@@ -368,7 +368,7 @@ def editar_header_arquivo(caminho_arquivo):
 
 def main():
     st.set_page_config(
-        page_title="ZTE Tools Suite - Desbloqueio Claro",
+        page_title="Desbloqueio Claro ZTE",
         page_icon="🔓",
         layout="wide"
     )
